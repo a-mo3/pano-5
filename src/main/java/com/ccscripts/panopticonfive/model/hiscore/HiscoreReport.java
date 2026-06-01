@@ -1,5 +1,6 @@
 package com.ccscripts.panopticonfive.model.hiscore;
 
+import com.ccscripts.panopticonfive.model.Player;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Setter
 public class HiscoreReport {
 
     @Id
@@ -22,18 +24,26 @@ public class HiscoreReport {
     private String name;
 
     @OneToMany(
-        mappedBy = "hiscore",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
+            mappedBy = "hiscore",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
     @Builder.Default
     private List<Skill> skills = new ArrayList<>();
 
     @OneToMany(
-        mappedBy = "hiscore",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
+            mappedBy = "hiscore",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
     @Builder.Default
     private List<Activity> activities = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "player_id", nullable = false)
+    private Player player;
+
+    public void assignPlayer(Player player) {
+        this.player = player;
+    }
 }

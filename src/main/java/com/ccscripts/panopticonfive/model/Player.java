@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Setter
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class Player {
     private String username;
 
     // used to enforce a min time between lookups
-    @Column()
+    @Column(name = "last_hiscores_lookup")
     private Long lastHiscoresLookup;
 
     @OneToMany(
@@ -33,4 +34,7 @@ public class Player {
     @Builder.Default
     private List<HiscoreReport> reports = new ArrayList<>();
 
+    public void markLookupComplete(long timestamp) {
+        this.lastHiscoresLookup = timestamp;
+    }
 }
