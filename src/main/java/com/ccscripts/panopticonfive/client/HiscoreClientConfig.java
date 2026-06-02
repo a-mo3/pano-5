@@ -6,7 +6,6 @@ import org.springframework.web.client.RestClient;
 
 @Configuration
 public class HiscoreClientConfig {
-
     @Bean
     public RestClient osrsRestClient() {
         return RestClient.builder()

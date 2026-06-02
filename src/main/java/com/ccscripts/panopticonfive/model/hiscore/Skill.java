@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@ToString
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

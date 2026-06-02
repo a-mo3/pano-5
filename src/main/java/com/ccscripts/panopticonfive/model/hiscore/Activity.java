@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@ToString
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

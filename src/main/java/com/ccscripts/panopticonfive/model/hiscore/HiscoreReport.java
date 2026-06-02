@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Setter
+@ToString
 public class HiscoreReport {
 
     @Id

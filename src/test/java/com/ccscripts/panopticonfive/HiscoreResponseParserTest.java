@@ -1,0 +1,38 @@
+package com.ccscripts.panopticonfive;
+
+import com.ccscripts.panopticonfive.model.hiscore.HiscoreReport;
+import com.ccscripts.panopticonfive.model.hiscore.Skill;
+import com.ccscripts.panopticonfive.service.HiscoreResponseParser;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
+class HiscoreResponseParserTest {
+
+    @Autowired
+    private HiscoreResponseParser parser;
+
+    @Test
+    void parsesHiscoreResponse() {
+        String response = """
+           {"name":"Zezima","skills":[{"id":0,"name":"Overall","rank":1584024,"level":1466,"xp":27957906},{"id":1,"name":"Attack","rank":1567546,"level":76,"xp":1343681},{"id":2,"name":"Defence","rank":1430721,"level":76,"xp":1342072},{"id":3,"name":"Strength","rank":-1,"level":75,"xp":1271864},{"id":4,"name":"Hitpoints","rank":-1,"level":1,"xp":-1},{"id":5,"name":"Ranged","rank":-1,"level":1,"xp":-1},{"id":6,"name":"Prayer","rank":-1,"level":1,"xp":-1},{"id":7,"name":"Magic","rank":-1,"level":1,"xp":-1},{"id":8,"name":"Cooking","rank":1055916,"level":80,"xp":1986131},{"id":9,"name":"Woodcutting","rank":960746,"level":78,"xp":1660787},{"id":10,"name":"Fletching","rank":1136863,"level":74,"xp":1112782},{"id":11,"name":"Fishing","rank":909101,"level":77,"xp":1623137},{"id":12,"name":"Firemaking","rank":415106,"level":99,"xp":13034646},{"id":13,"name":"Crafting","rank":-1,"level":1,"xp":-1},{"id":14,"name":"Smithing","rank":1938859,"level":55,"xp":183058},{"id":15,"name":"Mining","rank":1909377,"level":63,"xp":394517},{"id":16,"name":"Herblore","rank":1758243,"level":52,"xp":124233},{"id":17,"name":"Agility","rank":1451262,"level":70,"xp":738591},{"id":18,"name":"Thieving","rank":1873636,"level":53,"xp":150432},{"id":19,"name":"Slayer","rank":1280376,"level":71,"xp":826875},{"id":20,"name":"Farming","rank":1875261,"level":45,"xp":61836},{"id":21,"name":"Runecraft","rank":1674052,"level":44,"xp":57263},{"id":22,"name":"Hunter","rank":1929785,"level":45,"xp":62118},{"id":23,"name":"Construction","rank":1908050,"level":45,"xp":66561},{"id":24,"name":"Sailing","rank":-1,"level":1,"xp":0}],"activities":[{"id":0,"name":"Grid Points","rank":-1,"score":-1},{"id":1,"name":"League Points","rank":-1,"score":-1},{"id":2,"name":"Deadman Points","rank":-1,"score":-1},{"id":3,"name":"Bounty Hunter - Hunter","rank":-1,"score":-1},{"id":4,"name":"Bounty Hunter - Rogue","rank":-1,"score":-1},{"id":5,"name":"Bounty Hunter (Legacy) - Hunter","rank":-1,"score":-1},{"id":6,"name":"Bounty Hunter (Legacy) - Rogue","rank":-1,"score":-1},{"id":7,"name":"Clue Scrolls (all)","rank":-1,"score":-1},{"id":8,"name":"Clue Scrolls (beginner)","rank":-1,"score":-1},{"id":9,"name":"Clue Scrolls (easy)","rank":-1,"score":-1},{"id":10,"name":"Clue Scrolls (medium)","rank":-1,"score":-1},{"id":11,"name":"Clue Scrolls (hard)","rank":-1,"score":-1},{"id":12,"name":"Clue Scrolls (elite)","rank":-1,"score":-1},{"id":13,"name":"Clue Scrolls (master)","rank":-1,"score":-1},{"id":14,"name":"LMS - Rank","rank":-1,"score":-1},{"id":15,"name":"PvP Arena - Rank","rank":-1,"score":-1},{"id":16,"name":"Soul Wars Zeal","rank":-1,"score":-1},{"id":17,"name":"Rifts closed","rank":-1,"score":-1},{"id":18,"name":"Colosseum Glory","rank":-1,"score":-1},{"id":19,"name":"Collections Logged","rank":-1,"score":-1},{"id":20,"name":"Abyssal Sire","rank":-1,"score":-1},{"id":21,"name":"Alchemical Hydra","rank":-1,"score":-1},{"id":22,"name":"Amoxliatl","rank":-1,"score":-1},{"id":23,"name":"Araxxor","rank":-1,"score":-1},{"id":24,"name":"Artio","rank":-1,"score":-1},{"id":25,"name":"Barrows Chests","rank":-1,"score":-1},{"id":26,"name":"Brutus","rank":-1,"score":0},{"id":27,"name":"Bryophyta","rank":-1,"score":-1},{"id":28,"name":"Callisto","rank":-1,"score":-1},{"id":29,"name":"Calvar'ion","rank":-1,"score":-1},{"id":30,"name":"Cerberus","rank":-1,"score":-1},{"id":31,"name":"Chambers of Xeric","rank":-1,"score":-1},{"id":32,"name":"Chambers of Xeric: Challenge Mode","rank":-1,"score":-1},{"id":33,"name":"Chaos Elemental","rank":-1,"score":-1},{"id":34,"name":"Chaos Fanatic","rank":-1,"score":-1},{"id":35,"name":"Commander Zilyana","rank":-1,"score":-1},{"id":36,"name":"Corporeal Beast","rank":-1,"score":-1},{"id":37,"name":"Crazy Archaeologist","rank":-1,"score":-1},{"id":38,"name":"Dagannoth Prime","rank":-1,"score":-1},{"id":39,"name":"Dagannoth Rex","rank":-1,"score":-1},{"id":40,"name":"Dagannoth Supreme","rank":-1,"score":-1},{"id":41,"name":"Deranged Archaeologist","rank":-1,"score":-1},{"id":42,"name":"Doom of Mokhaiotl","rank":-1,"score":-1},{"id":43,"name":"Duke Sucellus","rank":-1,"score":-1},{"id":44,"name":"General Graardor","rank":-1,"score":-1},{"id":45,"name":"Giant Mole","rank":-1,"score":-1},{"id":46,"name":"Grotesque Guardians","rank":-1,"score":-1},{"id":47,"name":"Hespori","rank":-1,"score":-1},{"id":48,"name":"Kalphite Queen","rank":-1,"score":-1},{"id":49,"name":"King Black Dragon","rank":-1,"score":-1},{"id":50,"name":"Kraken","rank":-1,"score":-1},{"id":51,"name":"Kree'Arra","rank":-1,"score":-1},{"id":52,"name":"K'ril Tsutsaroth","rank":-1,"score":-1},{"id":53,"name":"Lunar Chests","rank":-1,"score":-1},{"id":54,"name":"Mimic","rank":-1,"score":-1},{"id":55,"name":"Nex","rank":-1,"score":-1},{"id":56,"name":"Nightmare","rank":-1,"score":-1},{"id":57,"name":"Phosani's Nightmare","rank":-1,"score":-1},{"id":58,"name":"Obor","rank":-1,"score":-1},{"id":59,"name":"Phantom Muspah","rank":-1,"score":-1},{"id":60,"name":"Sarachnis","rank":-1,"score":-1},{"id":61,"name":"Scorpia","rank":-1,"score":-1},{"id":62,"name":"Scurrius","rank":-1,"score":-1},{"id":63,"name":"Shellbane Gryphon","rank":-1,"score":-1},{"id":64,"name":"Skotizo","rank":-1,"score":-1},{"id":65,"name":"Sol Heredit","rank":-1,"score":-1},{"id":66,"name":"Spindel","rank":-1,"score":-1},{"id":67,"name":"Tempoross","rank":-1,"score":-1},{"id":68,"name":"The Gauntlet","rank":-1,"score":-1},{"id":69,"name":"The Corrupted Gauntlet","rank":-1,"score":-1},{"id":70,"name":"The Hueycoatl","rank":-1,"score":-1},{"id":71,"name":"The Leviathan","rank":-1,"score":-1},{"id":72,"name":"The Royal Titans","rank":-1,"score":-1},{"id":73,"name":"The Whisperer","rank":-1,"score":-1},{"id":74,"name":"Theatre of Blood","rank":-1,"score":-1},{"id":75,"name":"Theatre of Blood: Hard Mode","rank":-1,"score":-1},{"id":76,"name":"Thermonuclear Smoke Devil","rank":-1,"score":-1},{"id":77,"name":"Tombs of Amascut","rank":-1,"score":-1},{"id":78,"name":"Tombs of Amascut: Expert Mode","rank":-1,"score":-1},{"id":79,"name":"TzKal-Zuk","rank":-1,"score":-1},{"id":80,"name":"TzTok-Jad","rank":-1,"score":-1},{"id":81,"name":"Vardorvis","rank":-1,"score":-1},{"id":82,"name":"Venenatis","rank":-1,"score":-1},{"id":83,"name":"Vet'ion","rank":-1,"score":-1},{"id":84,"name":"Vorkath","rank":-1,"score":-1},{"id":85,"name":"Wintertodt","rank":35892,"score":702},{"id":86,"name":"Yama","rank":-1,"score":-1},{"id":87,"name":"Zalcano","rank":-1,"score":-1},{"id":88,"name":"Zulrah","rank":-1,"score":-1}]} 
+            """;
+
+        HiscoreReport report = parser.parse(response);
+
+        assertThat(report).isNotNull();
+        assertThat(report.getSkills()).isNotEmpty();
+        assertThat(report.getActivities()).isNotEmpty();
+
+        Skill firstSkill = report.getSkills().getFirst();
+
+        assertThat(firstSkill.getName()).isNotBlank();
+        assertThat(firstSkill.getRank()).isGreaterThanOrEqualTo(-1);
+        assertThat(firstSkill.getLevel()).isGreaterThanOrEqualTo(-1);
+        assertThat(firstSkill.getXp()).isGreaterThanOrEqualTo(-1);
+        System.out.println(report);
+    }
+}
