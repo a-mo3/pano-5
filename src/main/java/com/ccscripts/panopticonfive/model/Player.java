@@ -4,6 +4,7 @@ import com.ccscripts.panopticonfive.model.hiscore.HiscoreReport;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 

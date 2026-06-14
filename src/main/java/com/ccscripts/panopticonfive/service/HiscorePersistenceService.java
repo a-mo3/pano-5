@@ -23,17 +23,21 @@ public class HiscorePersistenceService {
     public void saveSuccessfulResults(List<HiscoreLookupResult> results) {
         long lookupTimestamp = Instant.now().toEpochMilli();
         for (HiscoreLookupResult result : results) {
-            if (!result.success()) {
-                continue;
-            }
+            System.out.println(result);
+            // we want to save failure because it will indicate bans.
+//            if (!result.success()) {
+//                continue;
+//            }
 
             Player player = playerRepository.findById(result.playerId())
                     .orElseThrow();
 
             HiscoreReport report = result.report();
-            report.assignPlayer(player);
-
-            hiscoreReportRepository.save(report);
+            // null if failed lookup (maybe from ban, maybe from bad connection)
+            if (report != null) {
+                report.assignPlayer(player);
+                hiscoreReportRepository.save(report);
+            }
 
             player.markLookupComplete(lookupTimestamp);
         }

@@ -6,6 +6,8 @@ import com.ccscripts.panopticonfive.model.Player;
 import com.ccscripts.panopticonfive.model.hiscore.HiscoreReport;
 import com.ccscripts.panopticonfive.repo.PlayerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -15,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 
 @Service
 @RequiredArgsConstructor
+@EnableScheduling
 public class HiscoreLookupService {
     private static final long FIFTEEN_MINUTES_MILLIS = 15 * 60 * 1000L;
 
@@ -23,7 +26,9 @@ public class HiscoreLookupService {
     private final ExecutorService hiscoreExecutorService;
     private final HiscorePersistenceService persistenceService;
 
+    @Scheduled(fixedRate = 15_000)
     public void lookupStalePlayers() {
+        System.out.println("Players lookup");
         long now = Instant.now().toEpochMilli();
         long cutoff = now - FIFTEEN_MINUTES_MILLIS;
 

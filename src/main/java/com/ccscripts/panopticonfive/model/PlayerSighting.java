@@ -1,7 +1,10 @@
 package com.ccscripts.panopticonfive.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.Instant;
 
 @Entity
 @Table(name = "player_sightings")
@@ -16,6 +19,7 @@ public class PlayerSighting {
     private Long id;
 
     private int world;
+    // kind of duplicate
     private int time;
     private int region;
 

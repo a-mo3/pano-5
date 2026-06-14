@@ -52,9 +52,11 @@ class PlayerSightingControllerTest {
             )
         );
 
+        String json = objectMapper.writeValueAsString(request);;
+        System.out.println(json);
         mockMvc.perform(post("/api/player-sightings")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .content(json))
             .andExpect(status().isCreated());
 
         ArgumentCaptor<List<PlayerSightingRequest>> captor =
