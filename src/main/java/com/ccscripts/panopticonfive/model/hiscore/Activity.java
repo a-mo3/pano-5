@@ -37,7 +37,4 @@ public class Activity {
     @Setter
     @ToString.Exclude
     private HiscoreReport hiscore;
-
-    @Column(nullable = false, updatable = false)
-    private Instant createdAt;
 }

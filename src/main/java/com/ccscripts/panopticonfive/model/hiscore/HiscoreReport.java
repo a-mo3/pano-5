@@ -1,6 +1,7 @@
 package com.ccscripts.panopticonfive.model.hiscore;
 
 import com.ccscripts.panopticonfive.model.Player;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,10 @@ public class HiscoreReport {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    @JsonIgnore
+    HiscoreResponseType status = HiscoreResponseType.SUCCESS;
+
     @OneToMany(
             mappedBy = "hiscore",
             cascade = CascadeType.ALL,
@@ -47,5 +52,15 @@ public class HiscoreReport {
 
     public void assignPlayer(Player player) {
         this.player = player;
+    }
+
+    @Column(nullable = false, updatable = false)
+    @JsonIgnore
+    private Instant createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = Instant.now();
+        if (status == null) status = HiscoreResponseType.SUCCESS;
     }
 }

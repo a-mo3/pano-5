@@ -3,6 +3,7 @@ package com.ccscripts.panopticonfive.service;
 import com.ccscripts.panopticonfive.model.HiscoreLookupResult;
 import com.ccscripts.panopticonfive.model.Player;
 import com.ccscripts.panopticonfive.model.hiscore.HiscoreReport;
+import com.ccscripts.panopticonfive.model.hiscore.HiscoreResponseType;
 import com.ccscripts.panopticonfive.repo.HiscoreReportRepository;
 import com.ccscripts.panopticonfive.repo.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,14 @@ public class HiscorePersistenceService {
             if (report != null) {
                 report.assignPlayer(player);
                 hiscoreReportRepository.save(report);
+            } else {
+                System.out.println("record a failure " + player);
+                HiscoreReport failure = HiscoreReport.builder()
+                        .player(player)
+                        .name(player.getUsername())
+                        .status(HiscoreResponseType.FAILURE)
+                        .build();
+                hiscoreReportRepository.save(failure);
             }
 
             player.markLookupComplete(lookupTimestamp);
